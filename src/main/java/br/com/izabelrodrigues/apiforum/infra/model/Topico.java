@@ -19,12 +19,14 @@ import javax.persistence.OneToMany;
 import br.com.izabelrodrigues.apiforum.infra.model.enums.StatusTopico;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
 @EqualsAndHashCode
+@NoArgsConstructor
 public class Topico {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,5 +46,12 @@ public class Topico {
 
 	@OneToMany(mappedBy = "topico")
 	private List<Resposta> respostas = new ArrayList<>();
+
+	public Topico(String titulo, String mensagem, Curso curso) {
+		this.titulo = titulo;
+		this.mensagem = mensagem;
+		this.curso = curso;
+	}
+
 
 }

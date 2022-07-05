@@ -15,23 +15,23 @@ import lombok.Getter;
  *
  */
 @Getter
-public class TopicoDto {
+public class OutputTopico {
 
 	private Long id;
 	private String titulo;
 	private String mensagem;
 	private LocalDateTime dataCriacao;
 
-	public TopicoDto(Topico topico) {
+	public OutputTopico(Topico topico) {
 		this.id = topico.getId();
 		this.titulo = topico.getTitulo();
 		this.mensagem = topico.getMensagem();
 		this.dataCriacao = topico.getDataCriacao();
 	}
 
-	public static List<TopicoDto> converter (List<Topico> topicos){
+	public static List<OutputTopico> converter (List<Topico> topicos){
 
-		return topicos.stream().map(TopicoDto::new).collect(Collectors.toList());
+		return topicos.stream().map(OutputTopico::new).collect(Collectors.toList());
 
 	}
 
