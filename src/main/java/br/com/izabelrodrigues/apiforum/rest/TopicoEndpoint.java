@@ -3,6 +3,8 @@ package br.com.izabelrodrigues.apiforum.rest;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,7 +43,7 @@ public class TopicoEndpoint {
 	}
 
 	@PostMapping
-	public ResponseEntity<OutputTopico> cadastrar(@RequestBody InputTopico input, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<OutputTopico> cadastrar(@RequestBody @Valid InputTopico input, UriComponentsBuilder uriBuilder) {
 
 		Topico topico = input.converter(cursoRepository);
 		topicoRepository.save(topico);
