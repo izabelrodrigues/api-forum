@@ -15,6 +15,12 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ *
+ * @author Izabel Rodrigues
+ *
+ */
+
 @Entity
 @Getter
 @Setter

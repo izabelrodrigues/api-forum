@@ -1,7 +1,7 @@
 /**
  *
  */
-package br.com.izabelrodrigues.apiforum.domain.dto;
+package br.com.izabelrodrigues.apiforum.domain.topico.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,6 +14,7 @@ import lombok.Getter;
  * @author Izabel Rodrigues
  *
  */
+
 @Getter
 public class OutputTopico {
 

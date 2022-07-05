@@ -22,6 +22,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ *
+ * @author Izabel Rodrigues
+ *
+ */
+
 @Entity
 @Getter
 @Setter

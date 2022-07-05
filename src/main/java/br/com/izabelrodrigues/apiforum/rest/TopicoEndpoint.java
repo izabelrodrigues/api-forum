@@ -14,11 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.izabelrodrigues.apiforum.domain.dto.InputTopico;
-import br.com.izabelrodrigues.apiforum.domain.dto.OutputTopico;
-import br.com.izabelrodrigues.apiforum.domain.repository.CursoRepository;
-import br.com.izabelrodrigues.apiforum.domain.repository.TopicRepository;
+import br.com.izabelrodrigues.apiforum.domain.curso.repository.CursoRepository;
+import br.com.izabelrodrigues.apiforum.domain.topico.dto.InputTopico;
+import br.com.izabelrodrigues.apiforum.domain.topico.dto.OutputTopico;
+import br.com.izabelrodrigues.apiforum.domain.topico.repository.TopicRepository;
 import br.com.izabelrodrigues.apiforum.infra.model.Topico;
+
+/**
+ *
+ *
+ * @author Izabel Rodrigues
+ *
+ */
 
 @RestController
 @RequestMapping("/topicos")
