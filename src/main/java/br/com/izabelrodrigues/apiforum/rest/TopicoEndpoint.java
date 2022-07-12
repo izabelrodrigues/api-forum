@@ -7,9 +7,12 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.izabelrodrigues.apiforum.domain.curso.repository.CursoRepository;
 import br.com.izabelrodrigues.apiforum.domain.topico.dto.InputTopico;
+import br.com.izabelrodrigues.apiforum.domain.topico.dto.InputTopicoBase;
 import br.com.izabelrodrigues.apiforum.domain.topico.dto.OutputTopico;
 import br.com.izabelrodrigues.apiforum.domain.topico.dto.OutputTopicoDetalhado;
 import br.com.izabelrodrigues.apiforum.domain.topico.repository.TopicRepository;
@@ -52,6 +56,7 @@ public class TopicoEndpoint {
 	}
 
 	@PostMapping
+	@Transactional
 	public ResponseEntity<OutputTopico> cadastrar(@RequestBody @Valid InputTopico input, UriComponentsBuilder uriBuilder) {
 
 		Topico topico = input.converter(cursoRepository);
@@ -70,6 +75,20 @@ public class TopicoEndpoint {
 		Topico topico = topicoRepository.getReferenceById(id);
 		return new OutputTopicoDetalhado(topico);
 
+	}
+
+	@PutMapping("/{id}")
+	@Transactional //Ao finalizar o método, o spring efetuará o commit automático da transação
+	public ResponseEntity<OutputTopico> atualizar(@PathVariable Long id, @RequestBody @Valid InputTopicoBase inputAtualizacao, UriComponentsBuilder uriBuilder){
+		Topico topico = inputAtualizacao.atualizar(id, topicoRepository);
+		return ResponseEntity.ok(new OutputTopico(topico));
+	}
+
+	@DeleteMapping("/{id}")
+	@Transactional
+	public ResponseEntity<?> remover(@PathVariable Long id){
+		topicoRepository.deleteById(id);
+		return ResponseEntity.ok().build();
 	}
 
 

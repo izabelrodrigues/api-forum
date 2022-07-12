@@ -6,8 +6,6 @@ package br.com.izabelrodrigues.apiforum.domain.topico.dto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.Length;
-
 import br.com.izabelrodrigues.apiforum.domain.curso.repository.CursoRepository;
 import br.com.izabelrodrigues.apiforum.infra.model.Curso;
 import br.com.izabelrodrigues.apiforum.infra.model.Topico;
@@ -21,13 +19,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class InputTopico {
-
-	@NotNull @NotEmpty @Length(min = 5, max = 255)
-	private String titulo;
-
-	@NotNull @NotEmpty @Length(min = 10)
-	private String mensagem;
+public class InputTopico extends InputTopicoBase {
 
 	@NotNull @NotEmpty
 	private String nomeCurso;
