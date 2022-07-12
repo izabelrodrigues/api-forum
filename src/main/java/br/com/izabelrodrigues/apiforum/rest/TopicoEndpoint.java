@@ -2,6 +2,7 @@ package br.com.izabelrodrigues.apiforum.rest;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -46,10 +47,10 @@ public class TopicoEndpoint {
 	@GetMapping
 	public List<OutputTopico> listar(String nomeCurso) {
 		List<Topico> topicos = null;
-		if(null == nomeCurso) {
-			topicos =  topicoRepository.findAll();
+		if (null == nomeCurso) {
+			topicos = topicoRepository.findAll();
 		} else {
-			topicos =  topicoRepository.findByCursoNome(nomeCurso);
+			topicos = topicoRepository.findByCursoNome(nomeCurso);
 		}
 
 		return OutputTopico.converter(topicos);
@@ -62,7 +63,7 @@ public class TopicoEndpoint {
 		Topico topico = input.converter(cursoRepository);
 		topicoRepository.save(topico);
 
-		//Cria a uri já substituindo o id no {id}
+		// Cria a uri já substituindo o id no {id}
 		URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
 
 		return ResponseEntity.created(uri).body(new OutputTopico(topico));
@@ -70,26 +71,44 @@ public class TopicoEndpoint {
 	}
 
 	@GetMapping("/{id}")
-	public OutputTopicoDetalhado buscarPorId(@PathVariable Long id) {
+	public ResponseEntity<OutputTopicoDetalhado> buscarPorId(@PathVariable Long id) {
 
-		Topico topico = topicoRepository.getReferenceById(id);
-		return new OutputTopicoDetalhado(topico);
+		Optional<Topico> optional = topicoRepository.findById(id);
+		if (optional.isPresent()) {
+			OutputTopicoDetalhado outputTopicoDetalhado = new OutputTopicoDetalhado(optional.get());
+			return ResponseEntity.ok(outputTopicoDetalhado);
+		}
+
+		return ResponseEntity.notFound().build();
 
 	}
 
 	@PutMapping("/{id}")
-	@Transactional //Ao finalizar o método, o spring efetuará o commit automático da transação
-	public ResponseEntity<OutputTopico> atualizar(@PathVariable Long id, @RequestBody @Valid InputTopicoBase inputAtualizacao, UriComponentsBuilder uriBuilder){
-		Topico topico = inputAtualizacao.atualizar(id, topicoRepository);
-		return ResponseEntity.ok(new OutputTopico(topico));
+	@Transactional // Ao finalizar o método, o spring efetuará o commit automático da transação
+	public ResponseEntity<OutputTopico> atualizar(@PathVariable Long id, @RequestBody @Valid InputTopicoBase inputAtualizacao, UriComponentsBuilder uriBuilder) {
+
+		Optional<Topico> optional = topicoRepository.findById(id);
+
+		if (optional.isPresent()) {
+			Topico topico = inputAtualizacao.atualizar(id, topicoRepository);
+			return ResponseEntity.ok(new OutputTopico(topico));
+		}
+
+		return ResponseEntity.notFound().build();
+
 	}
 
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity<?> remover(@PathVariable Long id){
-		topicoRepository.deleteById(id);
-		return ResponseEntity.ok().build();
-	}
+	public ResponseEntity<?> remover(@PathVariable Long id) {
 
+		Optional<Topico> optional = topicoRepository.findById(id);
+
+		if (optional.isPresent()) {
+			topicoRepository.deleteById(id);
+			return ResponseEntity.ok().build();
+		}
+		return ResponseEntity.notFound().build();
+	}
 
 }
