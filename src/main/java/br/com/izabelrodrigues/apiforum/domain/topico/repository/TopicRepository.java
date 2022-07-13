@@ -1,6 +1,7 @@
 package br.com.izabelrodrigues.apiforum.domain.topico.repository;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import br.com.izabelrodrigues.apiforum.infra.model.Topico;
 import br.com.izabelrodrigues.apiforum.infra.repository.TopicoRepositoryImpl;
@@ -13,5 +14,5 @@ import br.com.izabelrodrigues.apiforum.infra.repository.TopicoRepositoryImpl;
 
 public interface TopicRepository extends TopicoRepositoryImpl {
 
-	public List<Topico> findByCursoNome(String nomeCurso);
+	public Page<Topico> findByCursoNome(String nomeCurso, Pageable paginacao);
 }

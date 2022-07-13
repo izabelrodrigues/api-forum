@@ -4,8 +4,8 @@
 package br.com.izabelrodrigues.apiforum.domain.topico.dto;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Page;
 
 import br.com.izabelrodrigues.apiforum.infra.model.Topico;
 import lombok.Getter;
@@ -30,9 +30,9 @@ public class OutputTopico {
 		this.dataCriacao = topico.getDataCriacao();
 	}
 
-	public static List<OutputTopico> converter (List<Topico> topicos){
+	public static Page<OutputTopico> converter (Page<Topico> topicos){
 
-		return topicos.stream().map(OutputTopico::new).collect(Collectors.toList());
+		return topicos.map(OutputTopico::new);
 
 	}
 
