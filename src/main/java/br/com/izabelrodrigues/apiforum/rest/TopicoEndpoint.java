@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,6 +37,9 @@ import br.com.izabelrodrigues.apiforum.infra.model.Topico;
  *
  *
  * @author Izabel Rodrigues
+ *
+ * O uso de cache nesses endpoints é apenas a efeito de exemplo.
+ * Mas na prática cache seria mais apropriado em tabelas de tipos e/ou outras entidades que raramente são modificadas
  *
  */
 
@@ -72,6 +76,7 @@ public class TopicoEndpoint {
 
 	@PostMapping
 	@Transactional
+	@CacheEvict(value = "listaDeTopicos", allEntries = true) //Invalidar o cache para atualizar
 	public ResponseEntity<OutputTopico> cadastrar(@RequestBody @Valid InputTopico input, UriComponentsBuilder uriBuilder) {
 
 		Topico topico = input.converter(cursoRepository);
@@ -112,9 +117,11 @@ public class TopicoEndpoint {
 
 	}
 
+	@SuppressWarnings("rawtypes")
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity<?> remover(@PathVariable Long id) {
+	@CacheEvict(value = "listaDeTopicos", allEntries = true) //Invalidar o cache para atualizar
+	public ResponseEntity remover(@PathVariable Long id) {
 
 		Optional<Topico> optional = recuperaPorId(id);
 
