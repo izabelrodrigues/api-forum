@@ -19,12 +19,15 @@ public class SecurityConfiguration {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-			http.authorizeRequests().antMatchers(HttpMethod.GET, "/topicos").permitAll()
-			.antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
-			.anyRequest().authenticated();
-			http.headers().frameOptions().sameOrigin();
+
+		http.authorizeRequests() //
+		.antMatchers(HttpMethod.GET, "/topicos").permitAll() //
+		.antMatchers(HttpMethod.GET, "/topicos/*").permitAll() //
+		.anyRequest().authenticated().and().formLogin();
+
+		http.headers().frameOptions().sameOrigin();
+
 		return http.build();
 	}
-
 
 }
