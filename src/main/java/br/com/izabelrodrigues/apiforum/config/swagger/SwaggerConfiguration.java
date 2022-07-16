@@ -21,6 +21,8 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 @Configuration
 public class SwaggerConfiguration {
 
+	private static final String AUTHORIZATION_KEY = "Authorization";
+
 	@Value("${info.app.version}")
 	private String version;
 
@@ -37,10 +39,10 @@ public class SwaggerConfiguration {
 		info.setTitle(title);
 
 		SecurityRequirement securityItem = new SecurityRequirement();
-		securityItem.addList("Authorization");
+		securityItem.addList(AUTHORIZATION_KEY);
 
 		Components components = new Components();
-		components.addSecuritySchemes("Authorization", new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT"));
+		components.addSecuritySchemes(AUTHORIZATION_KEY, new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT"));
 
 		return new OpenAPI().components(components)
 				.addSecurityItem(securityItem)

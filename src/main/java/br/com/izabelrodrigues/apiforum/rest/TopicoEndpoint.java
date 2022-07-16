@@ -84,8 +84,7 @@ public class TopicoEndpoint {
 		Topico topico = input.converter(cursoRepository);
 		topicoRepository.save(topico);
 
-		// Cria a uri já substituindo o id no {id}
-		URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
+		URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri(); //Cria a uri já substituindo o id no {id}*
 
 		return ResponseEntity.created(uri).body(new OutputTopico(topico));
 

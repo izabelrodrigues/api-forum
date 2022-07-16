@@ -21,7 +21,7 @@ public class OutputTopicoDetalhado extends OutputTopico {
 
 	private String nomeAutor;
 	private StatusTopico status;
-	private List<OutputResposta> respostas = new ArrayList<OutputResposta>();
+	private List<OutputResposta> respostas = new ArrayList<>();
 
 	public OutputTopicoDetalhado(Topico topico) {
 		super(topico);
