@@ -1,5 +1,16 @@
 -- a senha é 123456
 INSERT INTO USUARIO(nome, email, senha) VALUES('Aluno', 'aluno@email.com', '$2a$10$tKhsRSzpey9HCnYguqzAH.bW/n8hATydzkrTnAfn3ndL1ir5G4w3K');
+INSERT INTO USUARIO(nome, email, senha) VALUES('Moderador', 'moderador@email.com', '$2a$10$tKhsRSzpey9HCnYguqzAH.bW/n8hATydzkrTnAfn3ndL1ir5G4w3K');
+INSERT INTO USUARIO(nome, email, senha) VALUES('Administrador', 'admin@email.com', '$2a$10$tKhsRSzpey9HCnYguqzAH.bW/n8hATydzkrTnAfn3ndL1ir5G4w3K');
+
+INSERT INTO PERFIL(id, nome) values (1, 'ROLE_ALUNO');
+INSERT INTO PERFIL(id, nome) values (2, 'ROLE_MODERADOR');
+INSERT INTO PERFIL(id, nome) values (3, 'ROLE_ADMINISTRADOR');
+
+INSERT INTO USUARIO_PERFIS(usuario_id,perfis_id) values (1,1);
+INSERT INTO USUARIO_PERFIS(usuario_id,perfis_id) values (2,2);
+INSERT INTO USUARIO_PERFIS(usuario_id,perfis_id) values (3,3);
+
 
 INSERT INTO CURSO(nome, categoria) VALUES('Spring Boot', 'Programação');
 INSERT INTO CURSO(nome, categoria) VALUES('HTML 5', 'Front-end');

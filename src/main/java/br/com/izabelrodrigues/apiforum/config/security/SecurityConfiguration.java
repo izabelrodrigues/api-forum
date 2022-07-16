@@ -45,12 +45,14 @@ public class SecurityConfiguration {
 				.antMatchers(HttpMethod.POST, "/auth").permitAll() //
 				.antMatchers(HttpMethod.GET, "/actuator/**").permitAll() //
 				.antMatchers(HttpMethod.GET, "/").permitAll() //
+				.antMatchers(HttpMethod.DELETE, "/topicos/*").hasAnyRole("ADMINISTRADOR", "MODERADOR") //
 				.antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/**/api-docs").permitAll() //
-				.antMatchers("**/favicon.ico", "/css/**","/images/**", "/js/**", "/webjars/**").permitAll() //
+				.antMatchers("**/favicon.ico", "/css/**", "/images/**", "/js/**", "/webjars/**").permitAll() //
 				.anyRequest().authenticated() //
 				.and().csrf().disable() //
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class); // Faz com que o nosso filtro rode antes de autenticar o usuário
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //
+				// Faz com que o nosso filtro rode antes de autenticar o usuário
+				.and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();
 	}
@@ -61,9 +63,10 @@ public class SecurityConfiguration {
 	}
 
 	@Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+			throws Exception {
+		return authenticationConfiguration.getAuthenticationManager();
+	}
 
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(autenticacaoService).passwordEncoder(passwordEncoder());
