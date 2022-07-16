@@ -11,7 +11,7 @@
 	<artifactId>api-forum</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>api-forum</name>
-	<description>estudo api spring boot</description>
+	<description>Estudo api spring boot</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -76,6 +76,12 @@
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
+		</dependency>
+
+		<!-- Actuator -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
 	</dependencies>
