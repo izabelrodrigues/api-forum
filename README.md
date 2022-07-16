@@ -4,3 +4,4 @@
 - Spring Security Core 5.7.2
 - Java 11
 - jsonwebtoken 0.9.1
+- springdoc-openapi 1.6.9
