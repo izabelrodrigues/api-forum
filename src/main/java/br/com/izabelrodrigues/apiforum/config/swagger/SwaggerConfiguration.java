@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 
 /**
  * @author Izabel Rodrigues
@@ -33,7 +36,15 @@ public class SwaggerConfiguration {
 		Info info = new Info();
 		info.setTitle(title);
 
-		return new OpenAPI().info(info.description(description).version(version));
+		SecurityRequirement securityItem = new SecurityRequirement();
+		securityItem.addList("Authorization");
+
+		Components components = new Components();
+		components.addSecuritySchemes("Authorization", new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT"));
+
+		return new OpenAPI().components(components)
+				.addSecurityItem(securityItem)
+				.info(info.description(description).version(version));
 	}
 
 }
