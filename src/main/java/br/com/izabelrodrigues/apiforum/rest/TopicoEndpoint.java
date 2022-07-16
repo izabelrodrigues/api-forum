@@ -127,7 +127,7 @@ public class TopicoEndpoint {
 
 		if (optional.isPresent()) {
 			topicoRepository.deleteById(id);
-			return ResponseEntity.ok().build();
+			return ResponseEntity.noContent().build();
 		}
 		return ResponseEntity.notFound().build();
 	}

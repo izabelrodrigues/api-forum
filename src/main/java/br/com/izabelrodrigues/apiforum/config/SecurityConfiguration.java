@@ -15,6 +15,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import br.com.izabelrodrigues.apiforum.domain.usuario.repository.UsuarioRepository;
 
 /**
  * @author Izabel Rodrigues
@@ -27,6 +30,12 @@ public class SecurityConfiguration {
 	@Autowired
 	private AutenticacaoService autenticacaoService;
 
+	@Autowired
+	private TokenAppService tokenService;
+
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -36,7 +45,8 @@ public class SecurityConfiguration {
 				.antMatchers(HttpMethod.POST, "/auth").permitAll() //
 				.anyRequest().authenticated() //
 				.and().csrf().disable() //
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class); // Faz com que o nosso filtro rode antes de autenticar o usuário
 
 		return http.build();
 	}
