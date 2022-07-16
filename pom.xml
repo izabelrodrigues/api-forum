@@ -84,6 +84,20 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
+		<!-- Spring doc - swagger -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.6.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-security</artifactId>
+			<version>1.6.9</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
@@ -102,5 +116,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

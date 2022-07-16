@@ -1,7 +1,7 @@
 /**
  *
  */
-package br.com.izabelrodrigues.apiforum.config;
+package br.com.izabelrodrigues.apiforum.config.security;
 
 import java.util.Optional;
 

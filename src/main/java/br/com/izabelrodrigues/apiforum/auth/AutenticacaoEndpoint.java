@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.izabelrodrigues.apiforum.auth.dto.InputLogin;
 import br.com.izabelrodrigues.apiforum.auth.dto.OutputToken;
-import br.com.izabelrodrigues.apiforum.config.TokenAppService;
+import br.com.izabelrodrigues.apiforum.config.security.TokenAppService;
 
 /**
  * @author Izabel Rodrigues

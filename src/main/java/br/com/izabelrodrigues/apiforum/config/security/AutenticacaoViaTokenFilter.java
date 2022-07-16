@@ -1,7 +1,7 @@
 /**
  *
  */
-package br.com.izabelrodrigues.apiforum.config;
+package br.com.izabelrodrigues.apiforum.config.security;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -23,6 +23,9 @@ import lombok.AllArgsConstructor;
 
 /**
  *
+ * TokenAppService e UsuarioRepository estão sendo injetados pelo construtor devido à classe
+ * AutenticacaoViaTokenFilter ser do tipo filtro e não do tipo de um Bean gerenciado pelo Spring
+ *
  * @author Izabel Rodrigues
  *
  */
@@ -33,7 +36,6 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 	private static final String TIPO_AUTORIZACAO = "Bearer ";
 	private static final String HEADER_AUTORIZACAO = "Authorization";
 
-	// Está sendo injetado pelo construtor devido a classe ser um filtro
 	private TokenAppService tokenService;
 
 	private UsuarioRepository usuarioRepository;
