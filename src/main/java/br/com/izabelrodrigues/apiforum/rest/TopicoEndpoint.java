@@ -32,6 +32,7 @@ import br.com.izabelrodrigues.apiforum.domain.topico.dto.OutputTopico;
 import br.com.izabelrodrigues.apiforum.domain.topico.dto.OutputTopicoDetalhado;
 import br.com.izabelrodrigues.apiforum.domain.topico.repository.TopicRepository;
 import br.com.izabelrodrigues.apiforum.infra.model.Topico;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  *
@@ -43,6 +44,7 @@ import br.com.izabelrodrigues.apiforum.infra.model.Topico;
  *
  */
 
+@Tag(name = TagsEndpoint.TOPICOS, description = "Operações relacionadas aos tópicos de um fórum")
 @RestController
 @RequestMapping("/topicos")
 public class TopicoEndpoint {

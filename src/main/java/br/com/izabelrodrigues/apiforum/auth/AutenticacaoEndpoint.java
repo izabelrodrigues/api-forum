@@ -19,12 +19,15 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.izabelrodrigues.apiforum.auth.dto.InputLogin;
 import br.com.izabelrodrigues.apiforum.auth.dto.OutputToken;
 import br.com.izabelrodrigues.apiforum.config.security.TokenAppService;
+import br.com.izabelrodrigues.apiforum.rest.TagsEndpoint;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * @author Izabel Rodrigues
  *
  */
 
+@Tag(name = TagsEndpoint.AUTENTICACAO, description = "Endpoint com operação para realizar autenticação")
 @RestController
 @RequestMapping("/auth")
 public class AutenticacaoEndpoint {

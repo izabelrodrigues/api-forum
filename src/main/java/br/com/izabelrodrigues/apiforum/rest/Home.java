@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/")
-public class Hello {
+public class Home {
 
 	@GetMapping
-	public String hello() {
+	public String index() {
 
-		return "Autenticou ....";
+		return "<a href='http://localhost:8080/swagger-ui.html'>Acesse a pagina da documentação da api</a>";
 	}
 
 }
