@@ -46,14 +46,6 @@ public class TokenAppService {
 	}
 
 
-	private Date recuperaDataExpiracao(Date hoje) {
-
-		Long tempoExpiracao = Long.parseLong(expiration);
-		long time = hoje.getTime();
-		long tempoTotal = time + tempoExpiracao;
-
-		return new Date(tempoTotal);
-	}
 
 
 	public boolean isTokenValido(String token) {
@@ -71,4 +63,12 @@ public class TokenAppService {
 		return Long.parseLong(claims.getSubject());
 	}
 
+	private Date recuperaDataExpiracao(Date hoje) {
+
+		Long tempoExpiracao = Long.parseLong(expiration);
+		long time = hoje.getTime();
+		long tempoTotal = time + tempoExpiracao;
+
+		return new Date(tempoTotal);
+	}
 }
