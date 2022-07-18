@@ -36,7 +36,7 @@ class AutenticacaoServiceTest {
 	UsuarioRepository usuarioRepository;
 
 	@BeforeEach
-	void setup() {
+	void setUp() throws Exception {
 		MockitoAnnotations.openMocks(this);
 	}
 
