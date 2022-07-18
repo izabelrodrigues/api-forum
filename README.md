@@ -9,7 +9,9 @@
 
 ## Gerar o pacote api-forum.jar
 
-- Execute mvn clean install na raiz do projeto
+- Execute na raiz do projeto
+
+mvn clean install -Dmaven.test.skip=true
 
 ## Subir a aplicação usando as configurações de prod
 - De dentro da pasta target execute:
