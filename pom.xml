@@ -105,6 +105,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>api-forum</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
