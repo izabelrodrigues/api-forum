@@ -21,3 +21,21 @@
 ## Executar os testes no profile test
 
 ```mvn test -Dspring.profiles.active=test -DAPI_FORUM_DATABASE_URL=jdbc:h2:mem:api-forumdb-test -DFORUM_DATABASE_USERNAME=sa -DFORUM_DATABASE_PASSWORD= -DFORUM_JWT_SECRET=UVpYnhCmlD613fHG0nshrlTVHcooM6a0GDXehTes```
+
+## Gerar imagem docker
+
+- Execute na raiz do projeto:
+
+```docker login```
+```docker build -t <seu_usuario_docker_hub>/api-forum:v1 .```
+
+Como boa prática, geramos também a versão latest
+
+```docker tag <seu_usuario_docker_hub>/api-forum:v1 <seu_usuario_docker_hub>/api-forum:latest```
+
+- Ao finalizar, envie as imagens para o docker hub
+
+```docker push <imagem:v1>```
+```docker push <imagem:latest>```
+
+
