@@ -26,7 +26,7 @@
 
 - Execute na raiz do projeto:
 
-```docker login```
+```docker login``` <br/>
 ```docker build -t <seu_usuario_docker_hub>/api-forum:v1 .```
 
 Como boa prática, geramos também a versão latest
@@ -35,7 +35,11 @@ Como boa prática, geramos também a versão latest
 
 - Ao finalizar, envie as imagens para o docker hub
 
-```docker push <imagem:v1>```
+```docker push <imagem:v1>``` <br/>
 ```docker push <imagem:latest>```
+
+Exemplo de como ficará armazenado as imagens no Docker Hub
+![image](https://user-images.githubusercontent.com/3687713/179742002-ccba777c-daca-430e-ab01-fca533b56a6e.png)
+
 
 
