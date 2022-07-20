@@ -42,4 +42,6 @@ Exemplo de como ficará armazenado as imagens no Docker Hub
 ![image](https://user-images.githubusercontent.com/3687713/179742002-ccba777c-daca-430e-ab01-fca533b56a6e.png)
 
 
+## Executando a imagem v1 - ambiente de prod pelo container
 
+``` docker run -p 8080:8080 --env ENV=prod --env API_FORUM_DATABASE_URL=jdbc:h2:mem:api-forumdb-prod --env API_FORUM_DATABASE_USERNAME=sa --env API_FORUM_DATABASE_PASSWORD= --env API_FORUM_JWT_SECRET=UVpYnhCmlD613fHG0nshrlTVHcooM6a0GDXehTpr <seu_usuario_docker_hub>/api-forum:v1 ```
