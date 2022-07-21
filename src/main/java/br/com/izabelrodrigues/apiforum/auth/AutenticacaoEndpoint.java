@@ -20,6 +20,8 @@ import br.com.izabelrodrigues.apiforum.auth.dto.InputLogin;
 import br.com.izabelrodrigues.apiforum.auth.dto.OutputToken;
 import br.com.izabelrodrigues.apiforum.config.security.TokenAppService;
 import br.com.izabelrodrigues.apiforum.rest.TagsEndpoint;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
@@ -32,11 +34,25 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/auth")
 public class AutenticacaoEndpoint {
 
+	Counter authUserSuccess;
+	Counter authUserErrors;
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
 	@Autowired
 	private TokenAppService tokenService;
+
+	public AutenticacaoEndpoint(MeterRegistry meterRegistry) {
+
+		authUserSuccess = Counter.builder("auth_user_success")
+				.description("Usuários autenticados")
+				.register(meterRegistry);
+
+		authUserErrors = Counter.builder("auth_user_error")
+				.description("Erros de login")
+				.register(meterRegistry);
+	}
 
 	@SuppressWarnings("rawtypes")
 	@PostMapping
@@ -48,9 +64,11 @@ public class AutenticacaoEndpoint {
 
 			Authentication authentication = authenticationManager.authenticate(dadosLogin);
 			String token = tokenService.gerarToken(authentication);
+			authUserSuccess.increment();
 			return ResponseEntity.ok(new OutputToken(token, "Bearer"));
 
 		} catch (AuthenticationException e) {
+			authUserErrors.increment();
 			return ResponseEntity.badRequest().build();
 		}
 
