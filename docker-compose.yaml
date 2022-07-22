@@ -1,0 +1,33 @@
+version: '3'
+
+networks:
+  local:
+
+services:
+  redis-forum-api:
+    image: redis
+    container_name: redis-forum-api
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    networks:
+      - local
+
+  mysql-forum-api:
+    image: mysql:5.7
+    container_name: mysql-forum-api
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: 'forum'
+      MYSQL_USER: 'forum'
+      MYSQL_PASSWORD: 'Bk55yc1u0eiqga6e'
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+    networks:
+      - local
+    depends_on:
+      - redis-forum-api
