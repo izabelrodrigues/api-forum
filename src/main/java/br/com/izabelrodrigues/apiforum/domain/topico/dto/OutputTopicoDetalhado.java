@@ -19,6 +19,11 @@ import lombok.Getter;
 @Getter
 public class OutputTopicoDetalhado extends OutputTopico {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -5762609456274838361L;
+
 	private String nomeAutor;
 	private StatusTopico status;
 	private List<OutputResposta> respostas = new ArrayList<>();
