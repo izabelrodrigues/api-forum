@@ -3,7 +3,6 @@
  */
 package br.com.izabelrodrigues.apiforum.domain.topico.dto;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import br.com.izabelrodrigues.apiforum.infra.model.Resposta;
@@ -15,12 +14,8 @@ import lombok.Getter;
  */
 
 @Getter
-public class OutputResposta implements Serializable {
+public class OutputResposta {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 8131637862552324004L;
 	private Long id;
 	private String mensagem;
 	private LocalDateTime dataCriacao;

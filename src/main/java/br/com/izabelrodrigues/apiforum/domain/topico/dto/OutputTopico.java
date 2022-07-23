@@ -3,7 +3,6 @@
  */
 package br.com.izabelrodrigues.apiforum.domain.topico.dto;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import org.springframework.data.domain.Page;
@@ -17,12 +16,8 @@ import lombok.Getter;
  */
 
 @Getter
-public class OutputTopico implements Serializable {
+public class OutputTopico {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = -864540616383926714L;
 	private Long id;
 	private String titulo;
 	private String mensagem;
