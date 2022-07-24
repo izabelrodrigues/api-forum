@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 5s
+scrape_configs:
+- job_name: prometheus-forum-api
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  metrics_path: /metrics
+  scheme: http
+  static_configs:
+  - targets:
+    - prometheus-forum-api:9090
+- job_name: app-forum-api
+  metrics_path: /actuator/prometheus
+  static_configs:
+  - targets:
+    - app-forum-api:8080

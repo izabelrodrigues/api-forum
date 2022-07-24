@@ -1,17 +1,24 @@
 version: '3'
 
 networks:
-  local:
+  database:
+    internal: true
+  cache:
+    internal: true
+  api:
+    internal: true
+  monit:
+  proxy:
 
 services:
   redis-forum-api:
     image: redis
     container_name: redis-forum-api
     restart: unless-stopped
-    ports:
-      - 6379:6379
+    expose:
+      - 6379
     networks:
-      - local
+      - cache
 
   mysql-forum-api:
     image: mysql:5.7
@@ -25,9 +32,83 @@ services:
       MYSQL_ROOT_HOST: '%'
     volumes:
       - ./mysql:/docker-entrypoint-initdb.d
-    ports:
-      - 3306:3306
+    expose:
+      - 3306
     networks:
-      - local
+      - database
     depends_on:
       - redis-forum-api
+
+  app-forum-api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: app-forum-api
+    container_name: app-forum-api
+    restart: unless-stopped
+    environment:
+      ENV: 'prod'
+      PORT: 8080
+      API_FORUM_JWT_SECRET: 'UVpYnhCmlD613fHG0nshrlTVHcooM6a0GDXehTi0'
+      API_FORUM_DATABASE_URL: 'jdbc:mysql://mysql-forum-api:3306/forum'
+      API_FORUM_DATABASE_USERNAME: 'forum'
+      API_FORUM_DATABASE_PASSWORD: 'Bk55yc1u0eiqga6e'
+    networks:
+      - api
+      - database
+      - cache
+    depends_on:
+      - mysql-forum-api
+    healthcheck:
+      test: "curl -sS http://app-forum-api:8080/actuator/health"
+      interval: 1s
+      timeout: 30s
+      retries: 60
+
+  proxy-forum-api:
+    image: nginx
+    container_name: proxy-forum-api
+    restart: unless-stopped
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/proxy.conf:/etc/nginx/conf.d/proxy.conf
+    ports:
+      - 80:80
+    networks:
+      - proxy
+      - api
+    depends_on:
+      - app-forum-api
+
+  prometheus-forum-api:
+    image: prom/prometheus:latest
+    container_name: prometheus-forum-api
+    restart: unless-stopped
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    ports:
+      - 9090:9090
+    networks:
+      - monit
+      - api
+    depends_on:
+      - proxy-forum-api
+
+  client-forum-api:
+    build:
+      context: ./client/
+      dockerfile: Dockerfile
+    image: client-forum-api
+    container_name: client-forum-api
+    restart: unless-stopped
+    networks:
+      - proxy
+    depends_on:
+      - proxy-forum-api
